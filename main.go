@@ -89,7 +89,7 @@ func NewUserService(priv string) *UserService {
 	}
 }
 
-var nonce = 4
+var nonce = 6
 
 func (u *UserService) SendDataToExecClient1k() {
 	defer u.localFile.Close()
@@ -419,8 +419,8 @@ func PrivateKeyToAddress(key string) (*ecdsa.PrivateKey, common.Address) {
 func main()  {
 	startTime := time.Now()
 	user := NewUserService(privateKey)
-	//user.SendDataToExecClient1k()
-	user.SendToContract(1)
+	user.SendDataToExecClient1k()
+	//user.SendToContract(1)
 	endTime := time.Now()
 	println("start time :",startTime.String(),"end time:",endTime.String())
 }
