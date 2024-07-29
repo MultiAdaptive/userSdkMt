@@ -55,25 +55,20 @@ type UserService struct {
 	ctx       context.Context
 	client1    *ethclient.Client
 	client2    *ethclient.Client
-	client3     *ethclient.Client
 	priv      *ecdsa.PrivateKey
 	addr      common.Address
 	privStr    string
 	localFile *os.File
 }
 
-func NewUserService(url1 string,url2 string, priv string) *UserService {
-	client1, err := ethclient.Dial(url1)
+func NewUserService(priv string) *UserService {
+	client1, err := ethclient.Dial(SignUrl)
 	if err != nil {
 		println("client1-----err",err.Error())
 	}
-	client2, err := ethclient.Dial(url2)
+	client2, err := ethclient.Dial(SignUrl2)
 	if err != nil {
 		println("client2-----err",err.Error())
-	}
-	client3, err := ethclient.Dial(Url)
-	if err != nil {
-		println("client3-----err",err.Error())
 	}
 	private, add := PrivateKeyToAddress(priv)
 	filePath := "./signInfo.txt"
@@ -87,7 +82,6 @@ func NewUserService(url1 string,url2 string, priv string) *UserService {
 		ctx:       context.Background(),
 		client1:   client1,
 		client2:   client2,
-		client3:   client3,
 		priv:      private,
 		addr:       add,
 		privStr:   priv,
@@ -318,7 +312,7 @@ func (u *UserService) SendToContract(length uint64) {
 		if len(parts) == 2 {
 			key := strings.Trim(parts[0], ` "`)
 			value := strings.Trim(parts[1], ` "`)
-			str := strconv.Itoa(count / 4 + 4)
+			str := strconv.Itoa(count / 4 + 6)
 			signStr1 := Key1 + str
 			signStr2 := Key2 + str
 			cmSte := Key3 + str
@@ -339,9 +333,10 @@ func (u *UserService) SendToContract(length uint64) {
 
 			// 每两条记录作为一组输出
 			if count % 4 == 3 {
+				client,_ := ethclient.Dial(Url)
 				fmt.Printf("sign1:%s , sign2:%s , cmmStr:%s  time:%d \n", sign1, sign2, commStr,timeout)
 				contractAddress := common.HexToAddress(CommitmentContractAddress)
-				instance, err := contract.NewCommitmentManager(contractAddress, u.client3)
+				instance, err := contract.NewCommitmentManager(contractAddress, client)
 				if err != nil {
 					errStr := fmt.Sprintf("cant create contract address err:%s", err.Error())
 					println("err",errStr)
@@ -369,7 +364,7 @@ func (u *UserService) SendToContract(length uint64) {
 				// 等待交易被打包并获取交易哈希
 				fmt.Println("交易哈希:", tx.Hash().Hex())
 				// 等待交易被确认
-				receipt, err := bind.WaitMined(u.ctx, u.client3, tx)
+				receipt, err := bind.WaitMined(u.ctx, client, tx)
 				if err != nil {
 					errStr := fmt.Sprintf("cant WaitMined by contract address err:%s", err.Error())
 					log.Fatal(errStr)
@@ -379,8 +374,7 @@ func (u *UserService) SendToContract(length uint64) {
 					log.Fatal("交易失败")
 				}
 				fmt.Println("交易成功!")
-				time.Sleep(3*time.Second)
-				}
+			}
 		}
 		count++
 	}
@@ -424,9 +418,9 @@ func PrivateKeyToAddress(key string) (*ecdsa.PrivateKey, common.Address) {
 
 func main()  {
 	startTime := time.Now()
-	user := NewUserService(SignUrl,SignUrl2,privateKey)
-	user.SendDataToExecClient1k()
-	//user.SendToContract(1)
+	user := NewUserService(privateKey)
+	//user.SendDataToExecClient1k()
+	user.SendToContract(1)
 	endTime := time.Now()
 	println("start time :",startTime.String(),"end time:",endTime.String())
 }
