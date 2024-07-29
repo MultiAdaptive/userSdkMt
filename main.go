@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"context"
 	"crypto/ecdsa"
+	"crypto/rand"
 	"usersdk/contract"
 
 	"encoding/hex"
@@ -97,8 +98,8 @@ func (u *UserService) SendDataToExecClient1k() {
 	for index := nonce;index<total;index++ {
 		index := index
 		println("当前-----index",index)
-		s := strconv.Itoa(9)
-		data := bytes.Repeat([]byte(s), 1024)
+		data := make([]byte, 1024)
+		_, err := rand.Read(data)
 		das := common.HexToHash(nodeGroupKeyStr)
 		if u.priv == nil || len(u.addr.Bytes()) == 0 {
 			priv,addr := PrivateKeyToAddress(u.privStr)
@@ -419,8 +420,8 @@ func PrivateKeyToAddress(key string) (*ecdsa.PrivateKey, common.Address) {
 func main()  {
 	startTime := time.Now()
 	user := NewUserService(privateKey)
-	//user.SendDataToExecClient1k()
-	user.SendToContract(1)
+	user.SendDataToExecClient1k()
+	//user.SendToContract(1)
 	endTime := time.Now()
 	println("start time :",startTime.String(),"end time:",endTime.String())
 }
