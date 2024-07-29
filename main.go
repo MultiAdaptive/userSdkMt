@@ -312,7 +312,7 @@ func (u *UserService) SendToContract(length uint64) {
 		if len(parts) == 2 {
 			key := strings.Trim(parts[0], ` "`)
 			value := strings.Trim(parts[1], ` "`)
-			str := strconv.Itoa(count / 4 + 6)
+			str := strconv.Itoa(count / 4 + 7)
 			signStr1 := Key1 + str
 			signStr2 := Key2 + str
 			cmSte := Key3 + str
@@ -419,8 +419,8 @@ func PrivateKeyToAddress(key string) (*ecdsa.PrivateKey, common.Address) {
 func main()  {
 	startTime := time.Now()
 	user := NewUserService(privateKey)
-	user.SendDataToExecClient1k()
-	//user.SendToContract(1)
+	//user.SendDataToExecClient1k()
+	user.SendToContract(1)
 	endTime := time.Now()
 	println("start time :",startTime.String(),"end time:",endTime.String())
 }
