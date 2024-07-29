@@ -90,7 +90,7 @@ func NewUserService(priv string) *UserService {
 	}
 }
 
-var nonce = 6
+var nonce = 28
 
 func (u *UserService) SendDataToExecClient1k() {
 	defer u.localFile.Close()
