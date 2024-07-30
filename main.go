@@ -290,6 +290,65 @@ func (u *UserService) SendDataToExecClient5k() {
 	fmt.Fprintf(u.localFile, "%s:%s\n", "count", countStr)
 }
 
+func (u *UserService) SendDataToExecClient10k() {
+	defer u.localFile.Close()
+	total := (1024 * 1024) / 5 + 1
+	for index := 0;index<total;index++ {
+		index := index
+		println("当前-----index",index)
+		data := make([]byte, 1024*10)
+		_, err := rand.Read(data)
+		das := common.HexToHash(nodeGroupKeyStr)
+		if u.priv == nil || len(u.addr.Bytes()) == 0 {
+			priv,addr := PrivateKeyToAddress(u.privStr)
+			u.priv = priv
+			u.addr = addr
+		}
+		commit,proof,point := GenerateCommitProofAndPointWithData(data)
+		outData := time.Now()
+		tm := time.Date(outData.Year(), outData.Month(), outData.Day(), outData.Hour(), 0, 0, 0, outData.Location())
+		outTimeStamp := tm.Add(24*time.Hour).Unix()
+		var sign1 []byte
+		sign1,err = u.signature(u.addr,uint64(index),1024*10,commit,data,das,proof,point,uint64(outTimeStamp))
+		if err != nil {
+			fmt.Printf("mta_sendDAByParams----send----signUrl:%s ,err:%@",SignUrl,err)
+		}
+		signStr1 := common.Bytes2Hex(sign1)
+		var sign2 []byte
+		sign2,err = u.signature2(u.addr,uint64(index),1024*10,commit,data,das,proof,point,uint64(outTimeStamp))
+		if err != nil {
+			fmt.Printf("mta_sendDAByParams----send----signUrl:%s ,err:%@",SignUrl2,err)
+		}
+		signStr2 := common.Bytes2Hex(sign2)
+		nonce++
+		key1 := Key1
+		key2 := Key2
+		key3 := Key3
+		indexStr := strconv.Itoa(index)
+		key1 += indexStr
+		key2 += indexStr
+		key3 += indexStr
+		// 以追加的方式写入文件
+		_, err = fmt.Fprintf(u.localFile, "%s:%s\n", key1, signStr1)
+		if err != nil {
+			fmt.Println("Error writing to file:", err)
+		}
+		_, err = fmt.Fprintf(u.localFile, "%s:%s\n", key2, signStr2)
+		if err != nil {
+			fmt.Println("Error writing to file:", err)
+		}
+		cmstr := common.Bytes2Hex(commit)
+		_, err = fmt.Fprintf(u.localFile, "%s:%s\n", key3, cmstr)
+		if err != nil {
+			fmt.Println("Error writing to file:", err)
+		}
+	}
+	countStr := strconv.Itoa(total)
+	fmt.Fprintf(u.localFile, "%s:%s\n", "count", countStr)
+}
+
+
+
 func (u *UserService) ReloadNonce() {
 	nonce = 0
 }
