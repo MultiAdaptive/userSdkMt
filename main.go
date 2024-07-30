@@ -292,7 +292,7 @@ func (u *UserService) SendDataToExecClient5k() {
 
 func (u *UserService) SendDataToExecClient10k() {
 	defer u.localFile.Close()
-	total := (1024 * 1024) / 5 + 1
+	total := (1024 * 1024) / 10 + 1
 	for index := 0;index<total;index++ {
 		index := index
 		println("当前-----index",index)
