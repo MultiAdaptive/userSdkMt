@@ -43,7 +43,7 @@ var(
 	SignUrl                   string = "http://13.250.55.252:8545"
 	//SignUrl                   string = "http://54.151.240.239:8545"
 	SignUrl2                  string = "http://54.80.136.172:8545"
-	privateKey                string = "7560b678e25d7372f56ca89064ed46e529e7dd88a606a65aabd11447d52a0d45"
+	privateKey                string = "3180b6cc1ef8d68c00dc30c83b9f00321a60dbeeac202e7671312dc0cd9707b9"
 )
 const (
 	Key1 = "signStr1-"
@@ -90,7 +90,7 @@ func NewUserService(priv string) *UserService {
 	}
 }
 
-var nonce = 28
+var nonce = 0
 
 func (u *UserService) SendDataToExecClient1k() {
 	defer u.localFile.Close()
@@ -182,8 +182,8 @@ func (u *UserService) SendDataToExecClient3k() {
 	for index := 0;index<total;index++ {
 		index := index
 		println("当前-----index",index)
-		s := strconv.Itoa(9)
-		data := bytes.Repeat([]byte(s), 1024*3)
+		data := make([]byte, 1024*3)
+		_, err := rand.Read(data)
 		das := common.HexToHash(nodeGroupKeyStr)
 		if u.priv == nil || len(u.addr.Bytes()) == 0 {
 			priv,addr := PrivateKeyToAddress(u.privStr)
@@ -193,10 +193,10 @@ func (u *UserService) SendDataToExecClient3k() {
 		commit,proof,point := GenerateCommitProofAndPointWithData(data)
 		outData := time.Now()
 		tm := time.Date(outData.Year(), outData.Month(), outData.Day(), outData.Hour(), 0, 0, 0, outData.Location())
-		outTimeStamp := tm.Add(12*time.Hour).Unix()
+		outTimeStamp := tm.Add(24*time.Hour).Unix()
 		// 创建一个上下文，用于取消交易
 		var sign1 []byte
-		sign1,err := u.signature(u.addr,uint64(index),1024*3,commit,data,das,proof,point,uint64(outTimeStamp))
+		sign1,err = u.signature(u.addr,uint64(index),1024*3,commit,data,das,proof,point,uint64(outTimeStamp))
 		if err != nil {
 			fmt.Printf("mta_sendDAByParams----send----signUrl:%s ,err:%@",SignUrl,err)
 		}
@@ -240,8 +240,8 @@ func (u *UserService) SendDataToExecClient5k() {
 	for index := 0;index<total;index++ {
 		index := index
 		println("当前-----index",index)
-		s := strconv.Itoa(9)
-		data := bytes.Repeat([]byte(s), 1024*5)
+		data := make([]byte, 1024*5)
+		_, err := rand.Read(data)
 		das := common.HexToHash(nodeGroupKeyStr)
 		if u.priv == nil || len(u.addr.Bytes()) == 0 {
 			priv,addr := PrivateKeyToAddress(u.privStr)
@@ -251,9 +251,9 @@ func (u *UserService) SendDataToExecClient5k() {
 		commit,proof,point := GenerateCommitProofAndPointWithData(data)
 		outData := time.Now()
 		tm := time.Date(outData.Year(), outData.Month(), outData.Day(), outData.Hour(), 0, 0, 0, outData.Location())
-		outTimeStamp := tm.Add(12*time.Hour).Unix()
+		outTimeStamp := tm.Add(24*time.Hour).Unix()
 		var sign1 []byte
-		sign1,err := u.signature(u.addr,uint64(index),1024*5,commit,data,das,proof,point,uint64(outTimeStamp))
+		sign1,err = u.signature(u.addr,uint64(index),1024*5,commit,data,das,proof,point,uint64(outTimeStamp))
 		if err != nil {
 			fmt.Printf("mta_sendDAByParams----send----signUrl:%s ,err:%@",SignUrl,err)
 		}
@@ -420,7 +420,7 @@ func PrivateKeyToAddress(key string) (*ecdsa.PrivateKey, common.Address) {
 func main()  {
 	startTime := time.Now()
 	user := NewUserService(privateKey)
-	user.SendDataToExecClient1k()
+	user.SendDataToExecClient3k()
 	//user.SendToContract(1)
 	endTime := time.Now()
 	println("start time :",startTime.String(),"end time:",endTime.String())
