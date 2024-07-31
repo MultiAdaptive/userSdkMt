@@ -110,12 +110,12 @@ func (u *UserService) SendDataToExecClient1k() {
 		tm := time.Date(outData.Year(), outData.Month(), outData.Day(), outData.Hour(), 0, 0, 0, outData.Location())
 		outTimeStamp := tm.Add(24*time.Hour).Unix()
 		// 创建一个上下文，用于取消交易
-		sign1,err := u.signature(u.addr,uint64(index),1024,commit,data,das,proof,point,uint64(outTimeStamp))
+		sign1,err := u.signature(u.addr,uint64(index),1024*1024,commit,data,das,proof,point,uint64(outTimeStamp))
 		signStr1 := common.Bytes2Hex(sign1)
 		println("signStr1-----",signStr1)
 
 		var sign2 []byte
-		sign2,err = u.signature2(u.addr,uint64(index),1024,commit,data,das,proof,point,uint64(outTimeStamp))
+		sign2,err = u.signature2(u.addr,uint64(index),1024*1024,commit,data,das,proof,point,uint64(outTimeStamp))
 		if err != nil {
 			fmt.Printf("mta_sendDAByParams----send----signUrl:%s ,err:%@",SignUrl2,err)
 		}
@@ -195,13 +195,13 @@ func (u *UserService) SendDataToExecClient3k() {
 		outTimeStamp := tm.Add(24*time.Hour).Unix()
 		// 创建一个上下文，用于取消交易
 		var sign1 []byte
-		sign1,err = u.signature(u.addr,uint64(index),1024*3,commit,data,das,proof,point,uint64(outTimeStamp))
+		sign1,err = u.signature(u.addr,uint64(index),1024*1024*3,commit,data,das,proof,point,uint64(outTimeStamp))
 		if err != nil {
 			fmt.Printf("mta_sendDAByParams----send----signUrl:%s ,err:%@",SignUrl,err)
 		}
 		signStr1 := common.Bytes2Hex(sign1)
 		var sign2 []byte
-		sign2,err =u.signature2(u.addr,uint64(index),1024*3,commit,data,das,proof,point,uint64(outTimeStamp))
+		sign2,err =u.signature2(u.addr,uint64(index),1024*1024*3,commit,data,das,proof,point,uint64(outTimeStamp))
 		if err != nil {
 			fmt.Printf("mta_sendDAByParams----send----signUrl:%s ,err:%@",SignUrl2,err)
 		}
@@ -252,13 +252,13 @@ func (u *UserService) SendDataToExecClient5k() {
 		tm := time.Date(outData.Year(), outData.Month(), outData.Day(), outData.Hour(), 0, 0, 0, outData.Location())
 		outTimeStamp := tm.Add(24*time.Hour).Unix()
 		var sign1 []byte
-		sign1,err = u.signature(u.addr,uint64(index),1024*5,commit,data,das,proof,point,uint64(outTimeStamp))
+		sign1,err = u.signature(u.addr,uint64(index),1024*1024*5,commit,data,das,proof,point,uint64(outTimeStamp))
 		if err != nil {
 			fmt.Printf("mta_sendDAByParams----send----signUrl:%s ,err:%@",SignUrl,err)
 		}
 		signStr1 := common.Bytes2Hex(sign1)
 		var sign2 []byte
-		sign2,err = u.signature2(u.addr,uint64(index),1024*5,commit,data,das,proof,point,uint64(outTimeStamp))
+		sign2,err = u.signature2(u.addr,uint64(index),1024*1024*5,commit,data,das,proof,point,uint64(outTimeStamp))
 		if err != nil {
 			fmt.Printf("mta_sendDAByParams----send----signUrl:%s ,err:%@",SignUrl2,err)
 		}
