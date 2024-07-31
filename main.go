@@ -93,11 +93,11 @@ var nonce = 0
 
 func (u *UserService) SendDataToExecClient1k() {
 	defer u.localFile.Close()
-	total := 1024 * 1024
+	total := 1024
 	for index := nonce;index<total;index++ {
 		index := index
 		println("当前-----index",index)
-		data := make([]byte, 1024)
+		data := make([]byte, 1024*1024)
 		_, err := rand.Read(data)
 		das := common.HexToHash(nodeGroupKeyStr)
 		if u.priv == nil || len(u.addr.Bytes()) == 0 {
@@ -177,11 +177,11 @@ func (u *UserService)signature2(sender common.Address, index, length uint64, com
 
 func (u *UserService) SendDataToExecClient3k() {
 	defer u.localFile.Close()
-	total := (1024 * 1024) / 3 + 1
+	total := 1024 / 3 + 1
 	for index := 0;index<total;index++ {
 		index := index
 		println("当前-----index",index)
-		data := make([]byte, 1024*3)
+		data := make([]byte, 1024*1024*3)
 		_, err := rand.Read(data)
 		das := common.HexToHash(nodeGroupKeyStr)
 		if u.priv == nil || len(u.addr.Bytes()) == 0 {
@@ -235,11 +235,11 @@ func (u *UserService) SendDataToExecClient3k() {
 
 func (u *UserService) SendDataToExecClient5k() {
 	defer u.localFile.Close()
-	total := (1024 * 1024) / 5 + 1
+	total := 1024  / 5 + 1
 	for index := 0;index<total;index++ {
 		index := index
 		println("当前-----index",index)
-		data := make([]byte, 1024*5)
+		data := make([]byte, 1024*1024*5)
 		_, err := rand.Read(data)
 		das := common.HexToHash(nodeGroupKeyStr)
 		if u.priv == nil || len(u.addr.Bytes()) == 0 {
@@ -478,7 +478,7 @@ func PrivateKeyToAddress(key string) (*ecdsa.PrivateKey, common.Address) {
 func main()  {
 	startTime := time.Now()
 	user := NewUserService(privateKey)
-	user.SendDataToExecClient3k()
+	user.SendDataToExecClient5k()
 	//user.SendToContract(1)
 	endTime := time.Now()
 	println("start time :",startTime.String(),"end time:",endTime.String())
