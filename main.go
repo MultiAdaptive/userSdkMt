@@ -162,7 +162,7 @@ func (u *UserService)signature(sender common.Address, index, length uint64, comm
 	ctx := context.Background()
 	var result []byte
 	// Call the eth_sendDAByParams method to get the signature
-	err := u.client1.Client().CallContext(ctx, &result, "mta_sendDAByParams", sender, index, length, commitment, data, nodeGroupKey, proof, claimedValue, timeout)
+	err := u.client1.Client().CallContext(ctx, &result, "mta_sendDAByParams", sender, index, length, commitment, data, nodeGroupKey, proof, claimedValue, timeout,[]byte{})
 	return result, err
 }
 
@@ -171,7 +171,7 @@ func (u *UserService)signature2(sender common.Address, index, length uint64, com
 	ctx := context.Background()
 	var result []byte
 	// Call the eth_sendDAByParams method to get the signature
-	err := u.client2.Client().CallContext(ctx, &result, "mta_sendDAByParams", sender, index, length, commitment, data, nodeGroupKey, proof, claimedValue, timeout)
+	err := u.client2.Client().CallContext(ctx, &result, "mta_sendDAByParams", sender, index, length, commitment, data, nodeGroupKey, proof, claimedValue, timeout,[]byte{})
 	return result, err
 }
 
@@ -292,11 +292,11 @@ func (u *UserService) SendDataToExecClient5k() {
 
 func (u *UserService) SendDataToExecClient10k() {
 	defer u.localFile.Close()
-	total := (1024 * 1024) / 10 + 1
+	total :=  1024 / 10 + 1
 	for index := 0;index<total;index++ {
 		index := index
 		println("当前-----index",index)
-		data := make([]byte, 1024*10)
+		data := make([]byte, 1024*1024*10)
 		_, err := rand.Read(data)
 		das := common.HexToHash(nodeGroupKeyStr)
 		if u.priv == nil || len(u.addr.Bytes()) == 0 {
@@ -309,13 +309,13 @@ func (u *UserService) SendDataToExecClient10k() {
 		tm := time.Date(outData.Year(), outData.Month(), outData.Day(), outData.Hour(), 0, 0, 0, outData.Location())
 		outTimeStamp := tm.Add(24*time.Hour).Unix()
 		var sign1 []byte
-		sign1,err = u.signature(u.addr,uint64(index),1024*10,commit,data,das,proof,point,uint64(outTimeStamp))
+		sign1,err = u.signature(u.addr,uint64(index),1024*1024*10,commit,data,das,proof,point,uint64(outTimeStamp))
 		if err != nil {
 			fmt.Printf("mta_sendDAByParams----send----signUrl:%s ,err:%@",SignUrl,err)
 		}
 		signStr1 := common.Bytes2Hex(sign1)
 		var sign2 []byte
-		sign2,err = u.signature2(u.addr,uint64(index),1024*10,commit,data,das,proof,point,uint64(outTimeStamp))
+		sign2,err = u.signature2(u.addr,uint64(index),1024*1024*10,commit,data,das,proof,point,uint64(outTimeStamp))
 		if err != nil {
 			fmt.Printf("mta_sendDAByParams----send----signUrl:%s ,err:%@",SignUrl2,err)
 		}
