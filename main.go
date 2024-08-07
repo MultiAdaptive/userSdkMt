@@ -28,13 +28,13 @@ import (
 var(
 	Url                       string = "https://eth-sepolia.g.alchemy.com/v2/dalC8j26yBwo67xTPdbWfPAnbATV5Jqy"
 	TokenContractAddress      string = "0x3e0F3B6235fC7f8F0Dd5d74e026f7e08c07D0557"
-	StorageManagementAddress  string = "0x664250Fb3b1cd58f07683D957A34daf8A06130fe"
+	StorageManagementAddress  string = "0x44214b40b88BeD3424b2684bE6b102fD3BCA4a09"
 	ApproveValue              uint64 = 1000000000000000
-	CommitmentContractAddress string = "0xa8ED91Eb2B65A681A742011798d7FB31C50FA724"
-	NodeContractAddress       string = "0x97bE3172AEA87b60224e8d604aC4bAbe55F067EC"
+	CommitmentContractAddress string = "0xb945872cbF327DA5CBEb6aE7286ccEE6CAaBA3B2"
+	NodeContractAddress       string = "0xed592c8F0B13bb8A761BFFb6140720D89552999B"
 	ChainID                   int64  = 11155111
-	nodeGroupSingle             string = "0x8af361a6d746c89b15a8bce2f9be881e6638b4b17ab7375a89ead3474e341687"
-	nodeGroupKeyStr string = "0xa67240bcc9f53639788673303eacfbe26d6751766b5bf52711e99ee9b9154d16"
+	//nodeGroupSingle             string = "0x8af361a6d746c89b15a8bce2f9be881e6638b4b17ab7375a89ead3474e341687"
+	nodeGroupKeyStr string = "0x8af361a6d746c89b15a8bce2f9be881e6638b4b17ab7375a89ead3474e341687"
 	RegistNodeAddr            string = ""
 	BroadCastKeyStorePth      string = "./keystoreFile"
 	StorageKeyStorePth        string = "./keystoreFileS"
