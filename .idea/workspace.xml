@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="e427ef22-9e21-465e-b101-9671ca0595aa" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/contract/StorageManager.go" beforeDir="false" afterPath="$PROJECT_DIR$/contract/StorageManager.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/main_test.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,7 +38,7 @@
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/contract" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
@@ -46,10 +48,11 @@
       <recent name="$PROJECT_DIR$/contract" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/contract" />
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Test.TestNewUserService in usersdk">
+  <component name="RunManager" selected="Go Build.go build usersdk">
     <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="userSdkMt" />
       <working_directory value="$PROJECT_DIR$" />
@@ -80,17 +83,6 @@
       <pattern value="^\QTestGenerateCommitProofAndPointWithData\E$" />
       <method v="2" />
     </configuration>
-    <configuration name="TestGetL1LatestBlockNum in usersdk" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
-      <module name="userSdkMt" />
-      <working_directory value="$PROJECT_DIR$" />
-      <framework value="gotest" />
-      <kind value="PACKAGE" />
-      <package value="usersdk" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <pattern value="^\QTestGetL1LatestBlockNum\E$" />
-      <method v="2" />
-    </configuration>
     <configuration name="TestNewUserService in usersdk" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="userSdkMt" />
       <working_directory value="$PROJECT_DIR$" />
@@ -100,6 +92,17 @@
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$" />
       <pattern value="^\QTestNewUserService\E$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestNewUserService2 in usersdk" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="userSdkMt" />
+      <working_directory value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="usersdk" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <pattern value="^\QTestNewUserService2\E$" />
       <method v="2" />
     </configuration>
     <configuration name="TestPrivateKeyToAddress in usersdk" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
@@ -126,11 +129,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Build.go build usersdk" />
+        <item itemvalue="Go Test.TestNewUserService2 in usersdk" />
         <item itemvalue="Go Test.TestNewUserService in usersdk" />
         <item itemvalue="Go Test.TestGenerateCommitProofAndPointWithData in usersdk" />
-        <item itemvalue="Go Build.go build usersdk" />
         <item itemvalue="Go Test.TestPrivateKeyToAddress in usersdk" />
-        <item itemvalue="Go Test.TestGetL1LatestBlockNum in usersdk" />
       </list>
     </recent_temporary>
   </component>
@@ -148,33 +151,33 @@
     </state>
     <state x="171" y="256" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1440.900/1440.25.1920.1055@0.0.1440.900" timestamp="1718076243110" />
     <state x="171" y="256" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1440.900@0.0.1440.900" timestamp="1721616620337" />
-    <state width="1398" height="262" key="GridCell.Tab.0.bottom" timestamp="1723025718938">
+    <state width="1398" height="262" key="GridCell.Tab.0.bottom" timestamp="1723605279767">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="304" key="GridCell.Tab.0.bottom/0.0.1440.900/1440.25.1920.1055@0.0.1440.900" timestamp="1722824489713" />
-    <state width="1398" height="262" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1723025718938" />
+    <state width="1398" height="262" key="GridCell.Tab.0.bottom/0.0.1440.900/1440.25.1920.1055@0.0.1440.900" timestamp="1723605279767" />
+    <state width="1398" height="304" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1723035403218" />
     <state width="1288" height="229" key="GridCell.Tab.0.bottom/0.25.1440.875/1440.25.1920.1055@0.25.1440.875" timestamp="1721206167589" />
     <state width="1398" height="262" key="GridCell.Tab.0.bottom/0.25.1440.875@0.25.1440.875" timestamp="1722224947337" />
-    <state width="1398" height="262" key="GridCell.Tab.0.center" timestamp="1723025718937">
+    <state width="1398" height="262" key="GridCell.Tab.0.center" timestamp="1723605279766">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="304" key="GridCell.Tab.0.center/0.0.1440.900/1440.25.1920.1055@0.0.1440.900" timestamp="1722824489712" />
-    <state width="1398" height="262" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1723025718937" />
+    <state width="1398" height="262" key="GridCell.Tab.0.center/0.0.1440.900/1440.25.1920.1055@0.0.1440.900" timestamp="1723605279766" />
+    <state width="1398" height="304" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1723035403217" />
     <state width="1398" height="262" key="GridCell.Tab.0.center/0.25.1440.875/1440.25.1920.1055@0.25.1440.875" timestamp="1722824489547" />
     <state width="1398" height="262" key="GridCell.Tab.0.center/0.25.1440.875@0.25.1440.875" timestamp="1722224947336" />
-    <state width="1398" height="262" key="GridCell.Tab.0.left" timestamp="1723025718937">
+    <state width="1398" height="262" key="GridCell.Tab.0.left" timestamp="1723605279765">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="304" key="GridCell.Tab.0.left/0.0.1440.900/1440.25.1920.1055@0.0.1440.900" timestamp="1722824489711" />
-    <state width="1398" height="262" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1723025718937" />
+    <state width="1398" height="262" key="GridCell.Tab.0.left/0.0.1440.900/1440.25.1920.1055@0.0.1440.900" timestamp="1723605279765" />
+    <state width="1398" height="304" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1723035403217" />
     <state width="1398" height="262" key="GridCell.Tab.0.left/0.25.1440.875/1440.25.1920.1055@0.25.1440.875" timestamp="1722824489245" />
     <state width="1288" height="229" key="GridCell.Tab.0.left/0.25.1440.875@0.0.1440.900" timestamp="1721270152198" />
     <state width="1398" height="262" key="GridCell.Tab.0.left/0.25.1440.875@0.25.1440.875" timestamp="1722224947335" />
-    <state width="1398" height="262" key="GridCell.Tab.0.right" timestamp="1723025718938">
+    <state width="1398" height="262" key="GridCell.Tab.0.right" timestamp="1723605279766">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1398" height="304" key="GridCell.Tab.0.right/0.0.1440.900/1440.25.1920.1055@0.0.1440.900" timestamp="1722824489713" />
-    <state width="1398" height="262" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1723025718938" />
+    <state width="1398" height="262" key="GridCell.Tab.0.right/0.0.1440.900/1440.25.1920.1055@0.0.1440.900" timestamp="1723605279766" />
+    <state width="1398" height="304" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1723035403217" />
     <state width="1288" height="229" key="GridCell.Tab.0.right/0.25.1440.875/1440.25.1920.1055@0.25.1440.875" timestamp="1721206167589" />
     <state width="1398" height="262" key="GridCell.Tab.0.right/0.25.1440.875@0.25.1440.875" timestamp="1722224947336" />
     <state width="1398" height="304" key="GridCell.Tab.1.bottom" timestamp="1722824489715">

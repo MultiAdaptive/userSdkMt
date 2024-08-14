@@ -39,7 +39,7 @@ var(
 	BroadCastKeyStorePth      string = "./keystoreFile"
 	StorageKeyStorePth        string = "./keystoreFileS"
 	PWD                       string = "123456"
-	SignUrl                   string = "http://13.250.55.252:8545"
+	SignUrl                   string = "https://test.eth.b01.multiadaptive.com"
 	//SignUrl                   string = "http://54.151.240.239:8545"
 	SignUrl2                  string = "http://54.80.136.172:8545"
 	privateKey                string = "3180b6cc1ef8d68c00dc30c83b9f00321a60dbeeac202e7671312dc0cd9707b9"
@@ -89,10 +89,26 @@ func NewUserService(priv string) *UserService {
 	}
 }
 
-var nonce = 0
+func (u *UserService) GetIndex() int {
+	client, err := ethclient.Dial(Url)
+	if err != nil {
+		return 0
+	}
+	instance, err := contract.NewCommitmentManager(common.HexToAddress(CommitmentContractAddress), client)
+	if err != nil {
+		return 0
+	}
+	index, err := instance.Indices(nil, u.addr)
+	if err != nil {
+		return 0
+	}
+	return int(index.Int64())
+}
 
 func (u *UserService) SendDataToExecClient1k() {
 	defer u.localFile.Close()
+	nonce := u.GetIndex()
+	println("查询到的当前index nonce为",nonce)
 	total := 1024
 	for index := nonce;index<total;index++ {
 		index := index
@@ -178,6 +194,7 @@ func (u *UserService)signature2(sender common.Address, index, length uint64, com
 func (u *UserService) SendDataToExecClient3k() {
 	defer u.localFile.Close()
 	total := 1024 / 3 + 1
+	nonce := u.GetIndex()
 	for index := 0;index<total;index++ {
 		index := index
 		println("当前-----index",index)
@@ -236,6 +253,7 @@ func (u *UserService) SendDataToExecClient3k() {
 func (u *UserService) SendDataToExecClient5k() {
 	defer u.localFile.Close()
 	total := 1024  / 5 + 1
+	nonce := u.GetIndex()
 	for index := 0;index<total;index++ {
 		index := index
 		println("当前-----index",index)
@@ -293,6 +311,7 @@ func (u *UserService) SendDataToExecClient5k() {
 func (u *UserService) SendDataToExecClient10k() {
 	defer u.localFile.Close()
 	total :=  1024 / 10 + 1
+	nonce := u.GetIndex()
 	for index := 0;index<total;index++ {
 		index := index
 		println("当前-----index",index)
@@ -347,12 +366,6 @@ func (u *UserService) SendDataToExecClient10k() {
 	fmt.Fprintf(u.localFile, "%s:%s\n", "count", countStr)
 }
 
-
-
-func (u *UserService) ReloadNonce() {
-	nonce = 0
-}
-
 func (u *UserService) SendToContract(length uint64) {
 	file, err := os.Open("./signInfo.txt")
 	if err != nil {
@@ -371,7 +384,7 @@ func (u *UserService) SendToContract(length uint64) {
 		if len(parts) == 2 {
 			key := strings.Trim(parts[0], ` "`)
 			value := strings.Trim(parts[1], ` "`)
-			str := strconv.Itoa(count / 4 + 7)
+			str := strconv.Itoa(count / 4 )
 			signStr1 := Key1 + str
 			signStr2 := Key2 + str
 			cmSte := Key3 + str
@@ -415,7 +428,7 @@ func (u *UserService) SendToContract(length uint64) {
 				signByte1 := common.Hex2Bytes(sign1)
 				signByte2 := common.Hex2Bytes(sign2)
 				signs := [][]byte{signByte1,signByte2}
-				daskey := common.HexToHash("0xa67240bcc9f53639788673303eacfbe26d6751766b5bf52711e99ee9b9154d16")
+				daskey := common.HexToHash("0x8af361a6d746c89b15a8bce2f9be881e6638b4b17ab7375a89ead3474e341687")
 				tx, err := instance.SubmitCommitment(auth, new(big.Int).SetUint64(length*1024), new(big.Int).SetInt64(timeout), common.Hash{} ,daskey, signs, commitData)
 				if err != nil {
 					log.Fatal(err)
@@ -478,7 +491,7 @@ func PrivateKeyToAddress(key string) (*ecdsa.PrivateKey, common.Address) {
 func main()  {
 	startTime := time.Now()
 	user := NewUserService(privateKey)
-	user.SendDataToExecClient5k()
+	user.SendDataToExecClient1k()
 	//user.SendToContract(1)
 	endTime := time.Now()
 	println("start time :",startTime.String(),"end time:",endTime.String())
