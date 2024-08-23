@@ -376,6 +376,7 @@ func (u *UserService) SendToContract(length uint64) {
 	// 读取文件内容并输出 value 值
 	scanner := bufio.NewScanner(file)
 	count := 0
+	nonce := u.GetIndex()
 	var sign1, sign2, commStr string
 	var timeout int64
 	for scanner.Scan() {
@@ -384,7 +385,7 @@ func (u *UserService) SendToContract(length uint64) {
 		if len(parts) == 2 {
 			key := strings.Trim(parts[0], ` "`)
 			value := strings.Trim(parts[1], ` "`)
-			str := strconv.Itoa(count / 4 )
+			str := strconv.Itoa(count / 4 + nonce)
 			signStr1 := Key1 + str
 			signStr2 := Key2 + str
 			cmSte := Key3 + str
