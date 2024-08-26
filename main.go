@@ -41,7 +41,7 @@ var(
 	PWD                       string = "123456"
 	SignUrl                   string = "https://test.eth.b01.multiadaptive.com"
 	//SignUrl                   string = "http://54.151.240.239:8545"
-	SignUrl2                  string = "http://54.80.136.172:8545"
+	SignUrl2                  string = "https://test.eth.b02.multiadaptive.com"
 	privateKey                string = "3180b6cc1ef8d68c00dc30c83b9f00321a60dbeeac202e7671312dc0cd9707b9"
 )
 const (
